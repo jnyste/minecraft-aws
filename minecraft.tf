@@ -19,6 +19,7 @@ resource "aws_spot_instance_request" "minecraft-server" {
         provisioner "remote-exec" {
 
                 connection {
+			host = self.public_ip
                         type = "ssh"
                         user = "ubuntu"
                         private_key = file("~/.ssh/minecraft-ssh.pem") 
@@ -37,10 +38,11 @@ resource "aws_spot_instance_request" "minecraft-server" {
                         "echo 'AWS_ACCESS_KEY_ID=${file("~/.aws/id")}' >> ~/.aws/credentials",
                         "echo 'AWS_SECRET_ACCESS_KEY=${file("~/.aws/key")}' >> ~/.aws/credentials",
                         "mkdir minecraft",
-                        "aws s3 sync s3://minecraft/minecraft minecraft/",
+                        "aws s3 sync s3://jsb-minecraft/server minecraft/",
 			"crontab -l | { cat; echo '* */2 * * * /home/ubuntu/minecraft/backup.sh >/dev/null 2>&1'; } | crontab -",
+			"/home/ubuntu/minecraft/watchdog.sh &",
 			"sudo cp minecraft/minecraft@.service /etc/systemd/system/minecraft@.service",
-			"sudo systemctl start minecraft@aws"
+			"sudo systemctl start minecraft@aws",
                         "sleep 10",
                         "cd minecraft"
                 ]
