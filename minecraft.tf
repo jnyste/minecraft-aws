@@ -21,7 +21,7 @@ resource "aws_spot_instance_request" "minecraft-server" {
                 connection {
                         type = "ssh"
                         user = "ubuntu"
-                        private_key = ""
+                        private_key = file("~/.ssh/minecraft-ssh.pem") 
                         agent = "false"
                 }
 
@@ -34,13 +34,12 @@ resource "aws_spot_instance_request" "minecraft-server" {
                         "sleep 10",
                         "mkdir ~/.aws/",
                         "echo '[default]' >> ~/.aws/credentials",
-                        "echo 'AWS_ACCESS_KEY_ID=AKIAJURIKGJATE7UO55Q' >> ~/.aws/credentials",
-                        "echo 'AWS_SECRET_ACCESS_KEY=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' >> ~/.aws/credentials",
+                        "echo 'AWS_ACCESS_KEY_ID=${file("~/.aws/id")}' >> ~/.aws/credentials",
+                        "echo 'AWS_SECRET_ACCESS_KEY=${file("~/.aws/key")}' >> ~/.aws/credentials",
                         "mkdir minecraft",
                         "aws s3 sync s3://minecraft/minecraft minecraft/",
                         "sleep 10",
-                        "cd minecraft",
-                        "screen java -jar spigot-1.15.2.jar &"
+                        "cd minecraft"
                 ]
 	}
 }
