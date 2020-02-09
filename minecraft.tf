@@ -28,7 +28,7 @@ resource "aws_spot_instance_request" "minecraft-server" {
 
                 inline = [
                         "sudo apt-get -y update",
-                        "sleep 10",
+                        "sleep 20",
                         "sudo apt-get install -y awscli",
                         "sleep 10",
                         "sudo apt-get install -y openjdk-11-jre-headless",
@@ -41,7 +41,7 @@ resource "aws_spot_instance_request" "minecraft-server" {
                         "mkdir minecraft",
                         "aws s3 sync s3://jsb-minecraft/server minecraft/",
 			"chmod +x minecraft/backup.sh minecraft/watchdog.sh",
-			"crontab -l | { cat; echo '* */2 * * * /home/ubuntu/minecraft/backup.sh >/dev/null 2>&1'; } | crontab -",
+			"crontab -l | { cat; echo '0 */2 * * * /home/ubuntu/minecraft/backup.sh >/dev/null 2>&1'; } | crontab -",
 			"/home/ubuntu/minecraft/watchdog.sh &",
 			"sudo cp minecraft/minecraft@.service /etc/systemd/system/minecraft@.service",
 			"sudo systemctl start minecraft@aws",
