@@ -1,4 +1,4 @@
-##minecraft-aws
+## minecraft-aws
 
 This script uses Terraform to spin up Minecraft servers on Amazon EC2 Spot Instances. 
 It automatically backs up the world every two hours by default (*TODO: Add more configuration) and does an emergency backup when the Spot Instance receives a shutdown notification.
@@ -18,7 +18,7 @@ terraform apply
 Get a cup of coffee
 Play Minecraft
 
-###TODO:
+### TODO:
 
 More secure configuration
 Make server restart automatically
