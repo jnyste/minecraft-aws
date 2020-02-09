@@ -19,6 +19,8 @@ Server SSH key in ~/.ssh/minecraft-ssh.pem # TODO: Add more configuration
 
 ## Instructions
 
+Upload your minecraft server files, watchdog.sh and backup.sh to an S3 bucket and point the scripts to your bucket
+
 terraform apply
 
 Get a cup of coffee
