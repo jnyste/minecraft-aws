@@ -33,6 +33,7 @@ resource "aws_spot_instance_request" "minecraft-server" {
                         "sleep 10",
                         "sudo apt-get install -y openjdk-11-jre-headless",
                         "sleep 10",
+			"sudo apt-get install -y zip",
                         "mkdir ~/.aws/",
                         "echo '[default]' >> ~/.aws/credentials",
                         "echo 'AWS_ACCESS_KEY_ID=${file("~/.aws/id")}' >> ~/.aws/credentials",
